@@ -37,9 +37,17 @@ public class ConsumirRestSecond extends RouteBuilder {
 				.to("file:files/output?fileName=newSampleDataToCTL.csv").log("Archivo nuevo csv creado exitosamente")
 				.to("direct:exec-ctl-action").end();
 
+		//Método para generar inserción de datos en Oracle con Sql Loader y Apache Camel usando cmd (Windows)
+		/*
 		from("direct:exec-ctl-action").to(
 				"exec:cmd?args=/C sqlldr supertestuser/123456@//localhost:1521/xe control='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\09082024\\loaddata09082024ctl.ctl' data='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\09082024\\tablapersonasenexcel.csv' log='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\09082024\\loaddata09082024fromapi001.log'")
 				.end();
+		*/
+		
+		//Método auxiliar sin cmd
+		from("direct:exec-ctl-action").to(
+				"exec:sqlldr?args=userid=supertestuser/123456@//localhost:1521/xe control='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\09082024\\loaddata09082024ctl.ctl' data='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\09082024\\tablapersonasenexcel.csv' log='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\09082024\\loaddata09082024fromapi002.log'")
+				.end(); 
 	}
 
 }
