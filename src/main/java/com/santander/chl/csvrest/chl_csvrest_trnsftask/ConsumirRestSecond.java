@@ -45,9 +45,17 @@ public class ConsumirRestSecond extends RouteBuilder {
 		*/
 		
 		//Método auxiliar sin cmd
-		from("direct:exec-ctl-action").to(
+		/*from("direct:exec-ctl-action").to(
 				"exec:sqlldr?args=userid=supertestuser/123456@//localhost:1521/xe control='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\09082024\\loaddata09082024ctl.ctl' data='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\09082024\\tablapersonasenexcel.csv' log='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\09082024\\loaddata09082024fromapi002.log'")
 				.end(); 
+		*/
+		
+		//Método auxiliar sin cmd(enfoque linux) para Confirming Global
+		from("direct:exec-ctl-action")
+			.log("Procesando exec")
+			//.process(new ProcessDataResponseCSVFile()).unmarshal(jacksonDataFormat)
+			.to("exec:sqlldr?args=userid=confirmingglobaluser/123456@//localhost:1521/xe control='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\12082024\\supplier.ctl' data='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\12082024\\supplier.csv' log='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\12082024\\loaddata12082024005.log'")
+		.end(); 
 	}
 
 }

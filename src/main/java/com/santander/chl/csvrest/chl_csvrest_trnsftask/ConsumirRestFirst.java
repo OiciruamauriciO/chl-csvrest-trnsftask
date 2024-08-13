@@ -20,6 +20,7 @@ public class ConsumirRestFirst extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
+		/*
 
 		errorHandler(defaultErrorHandler().maximumRedeliveries(0));
 		
@@ -49,6 +50,7 @@ public class ConsumirRestFirst extends RouteBuilder {
 			.to("file:files/output?fileName=newSampleData.csv")
 			.log("Archivo nuevo csv creado exitosamente")
 		.end();
+		*/
 
 	}
 
