@@ -16,6 +16,9 @@ public class ConsumirRestSecond extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
+		
+		getContext().getPropertiesComponent().setLocation("classpath:execparameters.properties");
+		getContext().getShutdownStrategy().setTimeout(10);
 
 		errorHandler(defaultErrorHandler().maximumRedeliveries(0));
 
@@ -51,10 +54,19 @@ public class ConsumirRestSecond extends RouteBuilder {
 		*/
 		
 		//Método auxiliar sin cmd(enfoque linux) para Confirming Global
+		/*
 		from("direct:exec-ctl-action")
 			.log("Procesando exec")
 			//.process(new ProcessDataResponseCSVFile()).unmarshal(jacksonDataFormat)
 			.to("exec:sqlldr?args=userid=confirmingglobaluser/123456@//localhost:1521/xe control='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\12082024\\supplier.ctl' data='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\12082024\\supplier.csv' log='C:\\Users\\mauri\\Desktop\\ImageMaker Test\\Bitácora\\002_082024\\12082024\\loaddata12082024005.log'")
+		.end(); 
+		*/
+		
+		//Método auxiliar sin cmd(enfoque linux) para Confirming Global con variables de exec parametrizadas con archivo properties
+		from("direct:exec-ctl-action")
+			.log("Procesando exec")
+			//.process(new ProcessDataResponseCSVFile()).unmarshal(jacksonDataFormat)
+			.to("exec:sqlldr?args=userid={{exec.queryconn}} control='{{exec.control}}' data='{{exec.data}}' log='{{exec.log}}'")
 		.end(); 
 	}
 
